@@ -1,0 +1,18 @@
+<% content_for :title, @position.asset_name %>
+
+<p><%= link_to "← #{@portfolio.name}", portfolio_path(@portfolio) %></p>
+
+<div class="page-header">
+  <div>
+    <h1><%= @position.asset_name %></h1>
+    <p class="text-muted">
+      <%= @position.ticker.presence || "—" %> · indice <%= @position.benchmark_name %> · <%= @position.asset_class %>
+      <% if @position.ter_pct.present? %>
+        · TER <%= number_to_percentage(@position.ter_pct, precision: 2) %>
+      <% end %>
+    </p>
+  </div>
+  <%= link_to "Modifier", edit_portfolio_position_path(@portfolio, @position), class: "btn btn--secondary" %>
+</div>
+
+<p class="text-muted">Le suivi mensuel de cette position arrive dans une prochaine étape.</p>

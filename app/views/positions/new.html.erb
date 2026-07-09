@@ -1,0 +1,7 @@
+<% content_for :title, "Nouvelle position" %>
+
+<p><%= link_to "← #{@portfolio.name}", portfolio_path(@portfolio) %></p>
+
+<h1>Nouvelle position</h1>
+
+<%= render "form", portfolio: @portfolio, position: @position %>

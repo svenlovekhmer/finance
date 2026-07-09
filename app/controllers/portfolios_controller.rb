@@ -6,6 +6,7 @@ class PortfoliosController < ApplicationController
   end
 
   def show
+    @positions = @portfolio.positions.order(:asset_name)
   end
 
   def new

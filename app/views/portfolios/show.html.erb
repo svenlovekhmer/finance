@@ -1,5 +1,7 @@
 <% content_for :title, @portfolio.name %>
 
+<p><%= link_to "← Portefeuilles", portfolios_path %></p>
+
 <div class="page-header">
   <div>
     <h1><%= @portfolio.name %></h1>
@@ -13,4 +15,43 @@
   <%= link_to "Modifier", edit_portfolio_path(@portfolio), class: "btn btn--secondary" %>
 </div>
 
-<p class="text-muted">Les positions de ce portefeuille arrivent dans une prochaine étape.</p>
+<div class="page-header">
+  <h2>Positions</h2>
+  <%= link_to "Nouvelle position", new_portfolio_position_path(@portfolio), class: "btn" %>
+</div>
+
+<% if @positions.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Actif</th>
+        <th>Indice</th>
+        <th>Classe d'actif</th>
+        <th class="numeric">TER</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @positions.each do |position| %>
+        <tr>
+          <td><%= link_to position.asset_name, portfolio_position_path(@portfolio, position) %></td>
+          <td><%= position.benchmark_name %></td>
+          <td><%= position.asset_class %></td>
+          <td class="numeric"><%= position.ter_pct.present? ? number_to_percentage(position.ter_pct, precision: 2) : "—" %></td>
+          <td>
+            <%= link_to "Modifier", edit_portfolio_position_path(@portfolio, position) %>
+            <%= link_to "Supprimer", portfolio_position_path(@portfolio, position), data: {
+              turbo_method: :delete,
+              turbo_confirm: "Supprimer la position « #{position.asset_name} » et tout son historique mensuel ?"
+            } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <p>Aucune position dans ce portefeuille pour l'instant.</p>
+    <%= link_to "Ajouter une position", new_portfolio_position_path(@portfolio), class: "btn" %>
+  </div>
+<% end %>

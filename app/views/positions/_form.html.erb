@@ -1,0 +1,63 @@
+<%= form_with model: [ portfolio, position ], class: "form" do |form| %>
+  <% if position.errors.any? %>
+    <div class="error-summary">
+      <strong><%= pluralize(position.errors.count, "erreur") %> à corriger :</strong>
+      <ul>
+        <% position.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :asset_name, "Nom de l'actif" %>
+    <%= form.text_field :asset_name, placeholder: "ex : Amundi Nasdaq-100 (PUST)" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ticker, "Ticker" %>
+    <%= form.text_field :ticker, placeholder: "ex : PUST" %>
+    <p class="field-hint">Optionnel.</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :benchmark_name, "Indice de référence" %>
+    <%= form.text_field :benchmark_name, placeholder: "ex : Nasdaq 100" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :asset_class, "Classe d'actif" %>
+    <%= form.text_field :asset_class, list: "asset-class-suggestions", placeholder: "ex : actions" %>
+    <datalist id="asset-class-suggestions">
+      <option value="actions"></option>
+      <option value="obligations"></option>
+      <option value="monétaire"></option>
+      <option value="immobilier"></option>
+      <option value="matières premières"></option>
+    </datalist>
+  </div>
+
+  <div class="field">
+    <%= form.label :ter_pct, "Frais de gestion annuels — TER (%)" %>
+    <%= form.number_field :ter_pct, step: 0.01, min: 0, placeholder: "ex : 0.20" %>
+    <p class="field-hint">Optionnel.</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :initial_capital, "Capital initial (€)" %>
+    <%= form.number_field :initial_capital, step: 0.01, min: 0 %>
+    <p class="field-hint">Capital déjà investi avant le premier mois suivi ici. Laisser à 0 si vous démarrez de zéro.</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :initial_contribution, "Apport initial (€)" %>
+    <%= form.number_field :initial_contribution, step: 0.01, min: 0 %>
+    <p class="field-hint">Total déjà versé avant le premier mois suivi ici. Laisser à 0 si vous démarrez de zéro.</p>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Enregistrer", class: "btn" %>
+    <%= link_to "Annuler", portfolio_path(portfolio), class: "btn btn--secondary" %>
+  </div>
+<% end %>
