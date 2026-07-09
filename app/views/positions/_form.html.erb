@@ -10,15 +10,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :asset_name, "Nom de l'actif" %>
-    <%= form.text_field :asset_name, placeholder: "ex : Amundi Nasdaq-100 (PUST)" %>
-  </div>
+  <div class="asset-search" data-controller="asset-search" data-asset-search-url-value="<%= market_data_search_path %>">
+    <div class="field">
+      <%= form.label :asset_name, "Nom de l'actif" %>
+      <%= form.text_field :asset_name, placeholder: "ex : Amundi Nasdaq-100 (PUST)",
+            data: { asset_search_target: "input", action: "input->asset-search#search blur->asset-search#hideDelayed" },
+            autocomplete: "off" %>
+      <p class="field-hint">Tapez au moins 2 caractères pour rechercher un ETF ou une action via Yahoo Finance.</p>
+      <div class="asset-search__results" data-asset-search-target="results" hidden></div>
+    </div>
 
-  <div class="field">
-    <%= form.label :ticker, "Ticker" %>
-    <%= form.text_field :ticker, placeholder: "ex : ESE.PA" %>
-    <p class="field-hint">Optionnel, sauf pour la source automatique — format Yahoo Finance (ex : ESE.PA pour Euronext Paris).</p>
+    <div class="field">
+      <%= form.label :ticker, "Ticker" %>
+      <%= form.text_field :ticker, placeholder: "ex : ESE.PA", data: { asset_search_target: "ticker" } %>
+      <p class="field-hint">Optionnel, sauf pour la source automatique — format Yahoo Finance (ex : ESE.PA pour Euronext Paris). Rempli automatiquement si vous choisissez un résultat ci-dessus.</p>
+    </div>
   </div>
 
   <div class="field">

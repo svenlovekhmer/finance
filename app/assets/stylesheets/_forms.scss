@@ -81,3 +81,53 @@
   gap: $spacing-md;
   margin-top: $spacing-lg;
 }
+
+.asset-search {
+  position: relative;
+}
+
+.asset-search__results {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: $spacing-xs;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-height: 16rem;
+  overflow-y: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.asset-search__option {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: $color-text;
+
+  &:hover, &:focus {
+    background: $color-bg;
+  }
+}
+
+.asset-search__name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.asset-search__meta {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+}

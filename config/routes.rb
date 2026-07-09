@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "dashboard", to: "dashboard#show"
+  get "market_data/search", to: "market_data#search"
 
   resources :portfolios do
     resources :positions, except: [ :index ] do
