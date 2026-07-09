@@ -70,8 +70,6 @@ fr:
         benchmark_name: "Indice de référence"
         asset_class: "Classe d'actif"
         ter_pct: "Frais de gestion (TER)"
-        initial_capital: "Capital initial"
-        initial_contribution: "Apport initial"
         data_source: "Source de données"
         auto_dca: "Versement automatique"
       monthly_entry:

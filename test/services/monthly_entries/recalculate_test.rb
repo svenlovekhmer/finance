@@ -2,14 +2,12 @@ require "test_helper"
 
 module MonthlyEntries
   class RecalculateTest < ActiveSupport::TestCase
-    def build_position(initial_capital: 0, initial_contribution: 0)
+    def build_position
       Position.create!(
         portfolio: portfolios(:one),
         asset_name: "Amundi Nasdaq-100",
         benchmark_name: "Nasdaq 100",
-        asset_class: "actions",
-        initial_capital: initial_capital,
-        initial_contribution: initial_contribution
+        asset_class: "actions"
       )
     end
 
@@ -36,14 +34,15 @@ module MonthlyEntries
       assert_in_delta 5.80, mar.delta.to_f
     end
 
-    test "starts from the position's initial_capital and initial_contribution" do
-      position = build_position(initial_capital: 1000, initial_contribution: 1000)
+    test "capital already held before tracking started is entered as the first month's contribution" do
+      position = build_position
 
-      entry = position.monthly_entries.create!(month: Date.new(2026, 1, 1), benchmark_variation_pct: 2.0, contribution_amount: 50, planned_contribution_amount: 50)
+      entry = position.monthly_entries.create!(month: Date.new(2026, 1, 1), benchmark_variation_pct: 2.0, contribution_amount: 1000, planned_contribution_amount: 1000)
 
-      assert_in_delta 1070.00, entry.reload.cumulative_capital.to_f
-      assert_in_delta 1050.00, entry.cumulative_contribution.to_f
-      assert_in_delta 20.00, entry.delta.to_f
+      # Like any other contribution, it doesn't earn that same month's growth.
+      assert_in_delta 1000.00, entry.reload.cumulative_capital.to_f
+      assert_in_delta 1000.00, entry.cumulative_contribution.to_f
+      assert_in_delta 0.00, entry.delta.to_f
     end
 
     test "treats a nil contribution_amount as zero without erroring" do

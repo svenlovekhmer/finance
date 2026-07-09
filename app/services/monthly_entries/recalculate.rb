@@ -1,7 +1,8 @@
 module MonthlyEntries
   # Recomputes cumulative_contribution, cumulative_capital and delta for every
-  # MonthlyEntry of a Position, in chronological order, starting from the
-  # Position's initial_capital / initial_contribution baseline.
+  # MonthlyEntry of a Position, in chronological order, starting from zero —
+  # any capital the investor already held before tracking started is simply
+  # entered as that first month's contribution_amount.
   #
   # Runs as a full recompute rather than resuming from a single changed month:
   # the series is small enough that this is simpler and avoids drift.
@@ -11,8 +12,8 @@ module MonthlyEntries
     end
 
     def call
-      previous_capital = position.initial_capital.to_f
-      previous_contribution = position.initial_contribution.to_f
+      previous_capital = 0.0
+      previous_contribution = 0.0
 
       position.monthly_entries.order(:month).each do |entry|
         contribution = entry.contribution_amount.to_f

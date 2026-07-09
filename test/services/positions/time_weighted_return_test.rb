@@ -7,7 +7,7 @@ module Positions
       portfolio = Portfolio.create!(user: user, name: "PEA", account_type: "PEA")
       Position.create!(
         portfolio: portfolio, asset_name: "Amundi Nasdaq-100", benchmark_name: "Nasdaq 100",
-        asset_class: "actions", initial_capital: 0, initial_contribution: 0
+        asset_class: "actions"
       )
     end
 

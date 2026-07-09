@@ -6,9 +6,7 @@ class PositionTest < ActiveSupport::TestCase
       portfolio: portfolios(:one),
       asset_name: "Amundi Nasdaq-100",
       benchmark_name: "Nasdaq 100",
-      asset_class: "actions",
-      initial_capital: 0,
-      initial_contribution: 0
+      asset_class: "actions"
     }
   end
 

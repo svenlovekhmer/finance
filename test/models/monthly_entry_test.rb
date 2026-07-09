@@ -67,7 +67,6 @@ class MonthlyEntryTest < ActiveSupport::TestCase
 
   test "saving an entry triggers a cascade recalculation on its position" do
     position = positions(:one)
-    position.update!(initial_capital: 0, initial_contribution: 0)
     position.monthly_entries.destroy_all
 
     entry = MonthlyEntry.create!(

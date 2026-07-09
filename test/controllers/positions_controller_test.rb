@@ -31,9 +31,7 @@ class PositionsControllerTest < ActionDispatch::IntegrationTest
         asset_name: "Amundi MSCI World",
         benchmark_name: "MSCI World",
         asset_class: "actions",
-        ter_pct: "0.38",
-        initial_capital: "0",
-        initial_contribution: "0"
+        ter_pct: "0.38"
       } }
     end
 

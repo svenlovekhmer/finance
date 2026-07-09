@@ -6,7 +6,7 @@ class GenerateMonthlyDcaEntriesJobTest < ActiveSupport::TestCase
     portfolio = Portfolio.create!(user: user, name: "PEA", account_type: "PEA")
     Position.create!(
       portfolio: portfolio, asset_name: "BNP Paribas Easy S&P 500", benchmark_name: "S&P 500",
-      asset_class: "actions", initial_capital: 0, initial_contribution: 0,
+      asset_class: "actions",
       data_source: data_source, auto_dca: auto_dca, ticker: ticker
     )
   end

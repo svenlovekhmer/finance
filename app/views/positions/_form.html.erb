@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="asset-search" data-controller="asset-search" data-asset-search-url-value="<%= market_data_search_path %>">
-    <div class="field">
+    <div class="field asset-search__field">
       <%= form.label :asset_name, "Nom de l'actif" %>
       <%= form.text_field :asset_name, placeholder: "ex : Amundi Nasdaq-100 (PUST)",
             data: { asset_search_target: "input", action: "input->asset-search#search blur->asset-search#hideDelayed" },
@@ -66,22 +66,6 @@
     </label>
     <p class="field-hint">Nécessite la source automatique. Le montant prévu est repris du dernier mois ; vous confirmez ensuite le versement.</p>
   </div>
-
-  <details class="field-group" <%= "open" if position.initial_capital.to_f.nonzero? || position.initial_contribution.to_f.nonzero? %>>
-    <summary>J'avais déjà du capital investi sur cette ligne</summary>
-
-    <div class="field">
-      <%= form.label :initial_capital, "Capital initial (€)" %>
-      <%= form.number_field :initial_capital, step: 0.01, min: 0 %>
-      <p class="field-hint">Ce que ça vaut aujourd'hui, avant le premier mois suivi ici.</p>
-    </div>
-
-    <div class="field">
-      <%= form.label :initial_contribution, "Apport initial (€)" %>
-      <%= form.number_field :initial_contribution, step: 0.01, min: 0 %>
-      <p class="field-hint">Ce que vous avez versé au total, avant le premier mois suivi ici.</p>
-    </div>
-  </details>
 
   <div class="form-actions">
     <%= form.submit "Enregistrer", class: "btn" %>

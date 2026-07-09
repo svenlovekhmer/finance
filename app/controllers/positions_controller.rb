@@ -51,7 +51,7 @@ class PositionsController < ApplicationController
   def position_params
     params.expect(position: %i[
       asset_name ticker benchmark_name asset_class ter_pct
-      initial_capital initial_contribution data_source auto_dca
+      data_source auto_dca
     ])
   end
 end

@@ -41,7 +41,11 @@
   <div class="field">
     <%= form.label :contribution_amount, "Montant versé (€)" %>
     <%= form.number_field :contribution_amount, step: 0.01, min: 0 %>
-    <p class="field-hint">Laisser vide si le versement n'a pas encore été effectué.</p>
+    <% if monthly_entry.new_record? && position.monthly_entries.none? %>
+      <p class="field-hint">Si vous aviez déjà du capital investi sur cette ligne avant de la suivre ici, incluez-le dans ce premier montant.</p>
+    <% else %>
+      <p class="field-hint">Laisser vide si le versement n'a pas encore été effectué.</p>
+    <% end %>
   </div>
 
   <div class="field">

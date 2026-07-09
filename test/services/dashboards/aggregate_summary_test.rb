@@ -9,7 +9,7 @@ module Dashboards
     def build_position(portfolio, name)
       Position.create!(
         portfolio: portfolio, asset_name: name, benchmark_name: "Nasdaq 100",
-        asset_class: "actions", initial_capital: 0, initial_contribution: 0
+        asset_class: "actions"
       )
     end
 
