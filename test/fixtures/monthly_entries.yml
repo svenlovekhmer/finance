@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  position: one
+  month: 2026-01-01
+  benchmark_variation_pct: 2.5
+  actual_variation_pct:
+  contribution_amount: 200.0
+  planned_contribution_amount: 200.0
+  cumulative_contribution: 200.0
+  cumulative_capital: 200.0
+  delta: 0.0
+  notes: MyText
+
+two:
+  position: two
+  month: 2026-01-01
+  benchmark_variation_pct: 1.1
+  actual_variation_pct:
+  contribution_amount: 150.0
+  planned_contribution_amount: 150.0
+  cumulative_contribution: 150.0
+  cumulative_capital: 150.0
+  delta: 0.0
+  notes: MyText

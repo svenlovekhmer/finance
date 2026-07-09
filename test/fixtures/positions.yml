@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  portfolio: one
+  asset_name: Amundi Nasdaq-100
+  ticker: PUST
+  benchmark_name: Nasdaq 100
+  asset_class: actions
+  ter_pct: 0.20
+  initial_capital: 0
+  initial_contribution: 0
+
+two:
+  portfolio: two
+  asset_name: Amundi MSCI World
+  ticker: CW8
+  benchmark_name: MSCI World
+  asset_class: actions
+  ter_pct: 0.38
+  initial_capital: 0
+  initial_contribution: 0

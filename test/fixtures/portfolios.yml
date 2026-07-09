@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  name: PEA
+  account_type: PEA
+  opening_date: 2022-01-01
+
+two:
+  user: two
+  name: CTO Amelie
+  account_type: CTO
+  opening_date: 2023-06-01
