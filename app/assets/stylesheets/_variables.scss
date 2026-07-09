@@ -13,6 +13,11 @@ $color-negative: #c62828;
 $color-danger: #c62828;
 $color-planned: #a6a69f;
 
+// Chart series — validated categorical pair (see dataviz skill), distinct
+// from the UI accent color on purpose.
+$color-series-capital: #1baf7a;
+$color-series-contribution: #2a78d6;
+
 $spacing-xs: 0.25rem;
 $spacing-sm: 0.5rem;
 $spacing-md: 1rem;

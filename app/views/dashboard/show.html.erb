@@ -1,0 +1,34 @@
+<% content_for :title, "Dashboard" %>
+
+<h1>Dashboard</h1>
+
+<% if @summary.any_entries? %>
+  <div class="stat-tiles">
+    <div class="stat-tile">
+      <p class="stat-tile__label">Capital total</p>
+      <p class="stat-tile__value"><%= number_to_currency(@summary.total_capital) %></p>
+    </div>
+    <div class="stat-tile">
+      <p class="stat-tile__label">Apport total</p>
+      <p class="stat-tile__value"><%= number_to_currency(@summary.total_contribution) %></p>
+    </div>
+    <div class="stat-tile">
+      <p class="stat-tile__label">Delta total</p>
+      <p class="stat-tile__value delta <%= @summary.total_delta >= 0 ? "delta--positive" : "delta--negative" %>">
+        <%= number_to_currency(@summary.total_delta) %>
+      </p>
+    </div>
+  </div>
+
+  <%= line_chart [
+        { name: "Capital cumulé", data: @summary.time_series.map { |point| [ point.month, point.capital ] } },
+        { name: "Apport cumulé", data: @summary.time_series.map { |point| [ point.month, point.contribution ] } }
+      ], colors: [ "#1baf7a", "#2a78d6" ], height: "320px" %>
+
+  <p><%= link_to "Voir mes portefeuilles", portfolios_path, class: "btn btn--secondary" %></p>
+<% else %>
+  <div class="empty-state">
+    <p>Aucune donnée à afficher pour l'instant — créez un portefeuille et une position pour commencer votre suivi.</p>
+    <%= link_to "Voir mes portefeuilles", portfolios_path, class: "btn" %>
+  </div>
+<% end %>

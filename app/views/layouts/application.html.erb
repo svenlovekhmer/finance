@@ -30,6 +30,7 @@
 
         <nav class="site-header__nav">
           <% if user_signed_in? %>
+            <%= link_to "Dashboard", root_path %>
             <%= link_to "Portefeuilles", portfolios_path %>
             <%= link_to "Mon compte", edit_user_registration_path %>
             <%= button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "link-button" %>

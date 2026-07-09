@@ -1,0 +1,28 @@
+@use "variables" as *;
+
+.stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+}
+
+.stat-tile {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  padding: $spacing-md $spacing-lg;
+}
+
+.stat-tile__label {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+  margin: 0 0 $spacing-xs;
+}
+
+.stat-tile__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  font-variant-numeric: proportional-nums;
+}
