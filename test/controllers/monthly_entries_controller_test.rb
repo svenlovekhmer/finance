@@ -24,6 +24,44 @@ class MonthlyEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input#monthly_entry_planned_contribution_amount[value=?]", "200.0"
   end
 
+  test "new prefills the variation automatically for a position with an automatic data source" do
+    sign_in @user
+    @position.update!(data_source: "auto", ticker: "ESE.PA")
+
+    stub_request(:get, "https://query1.finance.yahoo.com/v8/finance/chart/ESE.PA")
+      .with(query: { interval: "1mo", range: "5y" })
+      .to_return(
+        status: 200,
+        body: {
+          chart: { result: [ {
+            timestamp: [ Time.utc(2026, 1, 5).to_i, Time.utc(2026, 2, 4).to_i ],
+            indicators: { quote: [ { close: [ 100.0, 105.0 ] } ] }
+          } ] }
+        }.to_json,
+        headers: { "Content-Type" => "application/json" }
+      )
+
+    get new_portfolio_position_monthly_entry_path(@portfolio, @position)
+
+    assert_response :success
+    assert_select "input#monthly_entry_benchmark_variation_pct[value=?]", "5.0"
+    assert_match "Récupérée automatiquement", response.body
+  end
+
+  test "new leaves the variation blank when the automatic fetch fails" do
+    sign_in @user
+    @position.update!(data_source: "auto", ticker: "ESE.PA")
+
+    stub_request(:get, "https://query1.finance.yahoo.com/v8/finance/chart/ESE.PA")
+      .with(query: { interval: "1mo", range: "5y" })
+      .to_return(status: 500)
+
+    get new_portfolio_position_monthly_entry_path(@portfolio, @position)
+
+    assert_response :success
+    assert_match "Récupération automatique indisponible", response.body
+  end
+
   test "create with valid attributes cascades from the previous month" do
     sign_in @user
 

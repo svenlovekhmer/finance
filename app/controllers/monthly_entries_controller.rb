@@ -4,11 +4,13 @@ class MonthlyEntriesController < ApplicationController
 
   def new
     last_entry = @position.monthly_entries.order(:month).last
+    month = last_entry ? last_entry.month.next_month : Date.current.beginning_of_month
 
     @monthly_entry = @position.monthly_entries.build(
-      month: last_entry ? last_entry.month.next_month : Date.current.beginning_of_month,
+      month: month,
       planned_contribution_amount: last_entry&.planned_contribution_amount,
-      contribution_amount: last_entry&.planned_contribution_amount
+      contribution_amount: last_entry&.planned_contribution_amount,
+      benchmark_variation_pct: fetched_variation(month)
     )
   end
 
@@ -47,6 +49,12 @@ class MonthlyEntriesController < ApplicationController
 
   def set_monthly_entry
     @monthly_entry = @position.monthly_entries.find(params[:id])
+  end
+
+  def fetched_variation(month)
+    return nil unless @position.auto? && @position.ticker.present?
+
+    MarketData::MonthlyVariation.new.call(@position.ticker, month)&.round(2)
   end
 
   def monthly_entry_params

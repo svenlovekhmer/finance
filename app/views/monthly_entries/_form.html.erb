@@ -18,6 +18,13 @@
   <div class="field">
     <%= form.label :benchmark_variation_pct, "Variation de l'indice (%)" %>
     <%= form.number_field :benchmark_variation_pct, step: 0.01, placeholder: "ex : 2.50 ou -1.20", autofocus: true %>
+    <% if monthly_entry.new_record? && position.auto? %>
+      <% if monthly_entry.benchmark_variation_pct.present? %>
+        <p class="field-hint">Récupérée automatiquement via Yahoo Finance (<%= position.ticker %>) — à vérifier avant de valider.</p>
+      <% else %>
+        <p class="field-hint">Récupération automatique indisponible pour ce mois — à saisir manuellement.</p>
+      <% end %>
+    <% end %>
   </div>
 
   <div class="field">

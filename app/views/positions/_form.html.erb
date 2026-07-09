@@ -17,8 +17,8 @@
 
   <div class="field">
     <%= form.label :ticker, "Ticker" %>
-    <%= form.text_field :ticker, placeholder: "ex : PUST" %>
-    <p class="field-hint">Optionnel.</p>
+    <%= form.text_field :ticker, placeholder: "ex : ESE.PA" %>
+    <p class="field-hint">Optionnel, sauf pour la source automatique — format Yahoo Finance (ex : ESE.PA pour Euronext Paris).</p>
   </div>
 
   <div class="field">
@@ -42,6 +42,20 @@
     <%= form.label :ter_pct, "Frais de gestion annuels — TER (%)" %>
     <%= form.number_field :ter_pct, step: 0.01, min: 0, placeholder: "ex : 0.20" %>
     <p class="field-hint">Optionnel.</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :data_source, "Source de la variation mensuelle" %>
+    <%= form.select :data_source, [ [ "Saisie manuelle", "manual" ], [ "Automatique (Yahoo Finance)", "auto" ] ] %>
+    <p class="field-hint">En automatique, la variation de l'indice est récupérée via le ticker à chaque nouvelle entrée — modifiable si besoin.</p>
+  </div>
+
+  <div class="field field--checkbox">
+    <label>
+      <%= form.check_box :auto_dca %>
+      Générer automatiquement l'entrée du mois
+    </label>
+    <p class="field-hint">Nécessite la source automatique. Le montant prévu est repris du dernier mois ; vous confirmez ensuite le versement.</p>
   </div>
 
   <div class="field">
