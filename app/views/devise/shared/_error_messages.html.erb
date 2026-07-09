@@ -1,0 +1,10 @@
+<% if resource.errors.any? %>
+  <div class="error-summary" data-turbo-temporary>
+    <strong><%= pluralize(resource.errors.count, "erreur") %> à corriger :</strong>
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

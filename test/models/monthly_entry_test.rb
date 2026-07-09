@@ -32,7 +32,7 @@ class MonthlyEntryTest < ActiveSupport::TestCase
     duplicate = MonthlyEntry.new(valid_attributes)
 
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:month], "has already been taken"
+    assert_includes duplicate.errors[:month], "est déjà utilisé(e)"
   end
 
   test "invalid without a benchmark_variation_pct" do

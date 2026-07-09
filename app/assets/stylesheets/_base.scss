@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-sans;
+  color: $color-text;
+  background: $color-bg;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+  margin: 0 0 $spacing-md;
+}
+
+a {
+  color: $color-accent;
+}
+
+.page {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $spacing-lg;
+}
+
+.text-muted {
+  color: $color-text-muted;
+}

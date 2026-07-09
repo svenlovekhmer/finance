@@ -1,0 +1,40 @@
+@use "sass:color";
+@use "variables" as *;
+
+.btn {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  background: $color-accent;
+  color: #fff;
+
+  &:hover {
+    background: $color-accent-hover;
+    color: #fff;
+  }
+}
+
+.btn--secondary {
+  background: $color-surface;
+  border-color: $color-border;
+  color: $color-text;
+
+  &:hover {
+    background: $color-bg;
+    color: $color-text;
+  }
+}
+
+.btn--danger {
+  background: $color-danger;
+
+  &:hover {
+    background: color.adjust($color-danger, $lightness: -10%);
+  }
+}

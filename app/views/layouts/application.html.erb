@@ -24,6 +24,32 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <%= link_to "Finance", root_path, class: "site-header__brand" %>
+
+        <nav class="site-header__nav">
+          <% if user_signed_in? %>
+            <%= link_to "Portefeuilles", portfolios_path %>
+            <%= link_to "Mon compte", edit_user_registration_path %>
+            <%= button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "link-button" %>
+          <% else %>
+            <%= link_to "Connexion", new_user_session_path %>
+            <%= link_to "Créer un compte", new_user_registration_path %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <% if notice %>
+        <p class="flash flash--notice"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="flash flash--alert"><%= alert %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

@@ -1,0 +1,40 @@
+<% content_for :title, "Portefeuilles" %>
+
+<div class="page-header">
+  <h1>Portefeuilles</h1>
+  <%= link_to "Nouveau portefeuille", new_portfolio_path, class: "btn" %>
+</div>
+
+<% if @portfolios.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Date d'ouverture</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @portfolios.each do |portfolio| %>
+        <tr>
+          <td><%= link_to portfolio.name, portfolio_path(portfolio) %></td>
+          <td><%= portfolio.account_type %></td>
+          <td><%= portfolio.opening_date&.strftime("%d/%m/%Y") || "—" %></td>
+          <td>
+            <%= link_to "Modifier", edit_portfolio_path(portfolio) %>
+            <%= link_to "Supprimer", portfolio_path(portfolio), data: {
+              turbo_method: :delete,
+              turbo_confirm: "Supprimer le portefeuille « #{portfolio.name} » et toutes ses positions ?"
+            } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <p>Aucun portefeuille pour l'instant.</p>
+    <%= link_to "Créer votre premier portefeuille", new_portfolio_path, class: "btn" %>
+  </div>
+<% end %>

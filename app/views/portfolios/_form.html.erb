@@ -1,0 +1,33 @@
+<%= form_with model: portfolio, class: "form" do |form| %>
+  <% if portfolio.errors.any? %>
+    <div class="error-summary">
+      <strong><%= pluralize(portfolio.errors.count, "erreur") %> à corriger :</strong>
+      <ul>
+        <% portfolio.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "Nom" %>
+    <%= form.text_field :name, placeholder: "ex : PEA, CTO Amélie…" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :account_type, "Type de compte" %>
+    <%= form.select :account_type, Portfolio::ACCOUNT_TYPES, include_blank: "Sélectionner…" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :opening_date, "Date d'ouverture" %>
+    <%= form.date_field :opening_date %>
+    <p class="field-hint">Optionnel — sert au calcul du seuil fiscal 5 ans pour un PEA.</p>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Enregistrer", class: "btn" %>
+    <%= link_to "Annuler", portfolios_path, class: "btn btn--secondary" %>
+  </div>
+<% end %>

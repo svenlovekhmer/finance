@@ -1,0 +1,16 @@
+<% content_for :title, @portfolio.name %>
+
+<div class="page-header">
+  <div>
+    <h1><%= @portfolio.name %></h1>
+    <p class="text-muted">
+      <%= @portfolio.account_type %>
+      <% if @portfolio.opening_date %>
+        · ouvert le <%= @portfolio.opening_date.strftime("%d/%m/%Y") %>
+      <% end %>
+    </p>
+  </div>
+  <%= link_to "Modifier", edit_portfolio_path(@portfolio), class: "btn btn--secondary" %>
+</div>
+
+<p class="text-muted">Les positions de ce portefeuille arrivent dans une prochaine étape.</p>

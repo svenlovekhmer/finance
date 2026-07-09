@@ -1,0 +1,65 @@
+@use "variables" as *;
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  overflow: hidden;
+
+  th, td {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    border-bottom: 1px solid $color-border;
+    font-size: 0.9rem;
+  }
+
+  th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $color-text-muted;
+    background: $color-bg;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: $color-bg;
+  }
+
+  td.numeric, th.numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.delta {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  &.delta--positive {
+    color: $color-positive;
+  }
+
+  &.delta--negative {
+    color: $color-negative;
+  }
+}
+
+// A month whose contribution hasn't been paid yet (planned only).
+.row--planned {
+  color: $color-planned;
+  font-style: italic;
+}
+
+.empty-state {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-muted;
+  border: 1px dashed $color-border;
+  border-radius: $radius;
+}

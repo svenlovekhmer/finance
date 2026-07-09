@@ -1,0 +1,71 @@
+@use "variables" as *;
+
+.site-header {
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+}
+
+.site-header__inner {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header__brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-decoration: none;
+  color: $color-text;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  a, .link-button {
+    color: $color-text-muted;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.flash {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius;
+  margin-bottom: $spacing-md;
+  font-size: 0.9rem;
+}
+
+.flash--notice {
+  background: rgba($color-positive, 0.1);
+  color: $color-accent-hover;
+}
+
+.flash--alert {
+  background: rgba($color-danger, 0.1);
+  color: $color-danger;
+}
+
+.page-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
