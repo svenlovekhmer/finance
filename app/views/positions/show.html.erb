@@ -16,6 +16,35 @@
 </div>
 
 <% if @monthly_entries.any? %>
+  <div class="stat-tiles">
+    <div class="stat-tile">
+      <p class="stat-tile__label">Rendement cumulé (TWR)</p>
+      <p class="stat-tile__value delta <%= @twr.cumulative_pct >= 0 ? "delta--positive" : "delta--negative" %>">
+        <%= number_to_percentage(@twr.cumulative_pct, precision: 2) %>
+      </p>
+    </div>
+    <div class="stat-tile">
+      <p class="stat-tile__label">Rendement annualisé (TWR)</p>
+      <% if @twr.annualized_pct %>
+        <p class="stat-tile__value delta <%= @twr.annualized_pct >= 0 ? "delta--positive" : "delta--negative" %>">
+          <%= number_to_percentage(@twr.annualized_pct, precision: 2) %>
+        </p>
+      <% else %>
+        <p class="stat-tile__value text-muted">—</p>
+        <p class="field-hint">À partir de 12 mois d'historique</p>
+      <% end %>
+    </div>
+    <div class="stat-tile">
+      <p class="stat-tile__label">Max drawdown</p>
+      <p class="stat-tile__value delta <%= @drawdown.max_drawdown_pct.zero? ? "" : "delta--negative" %>">
+        <%= number_to_percentage(@drawdown.max_drawdown_pct, precision: 2) %>
+      </p>
+      <% if @drawdown.peak_month && @drawdown.trough_month && @drawdown.peak_month != @drawdown.trough_month %>
+        <p class="field-hint"><%= l(@drawdown.peak_month, format: "%B %Y") %> → <%= l(@drawdown.trough_month, format: "%B %Y") %></p>
+      <% end %>
+    </div>
+  </div>
+
   <%= line_chart [
         { name: "Capital cumulé", data: @monthly_entries.pluck(:month, :cumulative_capital) },
         { name: "Apport cumulé", data: @monthly_entries.pluck(:month, :cumulative_contribution) }

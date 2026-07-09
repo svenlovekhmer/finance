@@ -13,7 +13,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select ".stat-tile", count: 3
+    assert_select ".stat-tile", count: 4
   end
 
   test "shows an empty state for a user with no portfolios" do

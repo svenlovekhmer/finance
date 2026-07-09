@@ -4,6 +4,8 @@ class PositionsController < ApplicationController
 
   def show
     @monthly_entries = @position.monthly_entries.order(:month)
+    @twr = Positions::TimeWeightedReturn.new(@position).call
+    @drawdown = DrawdownCalculator.new(@monthly_entries.pluck(:month, :cumulative_capital)).call
   end
 
   def new

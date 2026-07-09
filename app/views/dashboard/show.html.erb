@@ -18,6 +18,15 @@
         <%= number_to_currency(@summary.total_delta) %>
       </p>
     </div>
+    <div class="stat-tile">
+      <p class="stat-tile__label">Max drawdown</p>
+      <p class="stat-tile__value delta <%= @drawdown.max_drawdown_pct.zero? ? "" : "delta--negative" %>">
+        <%= number_to_percentage(@drawdown.max_drawdown_pct, precision: 2) %>
+      </p>
+      <% if @drawdown.peak_month && @drawdown.trough_month && @drawdown.peak_month != @drawdown.trough_month %>
+        <p class="field-hint"><%= l(@drawdown.peak_month, format: "%B %Y") %> → <%= l(@drawdown.trough_month, format: "%B %Y") %></p>
+      <% end %>
+    </div>
   </div>
 
   <%= line_chart [
