@@ -25,23 +25,26 @@
       <%= form.text_field :ticker, placeholder: "ex : ESE.PA", data: { asset_search_target: "ticker" } %>
       <p class="field-hint">Optionnel, sauf pour la source automatique — format Yahoo Finance (ex : ESE.PA pour Euronext Paris). Rempli automatiquement si vous choisissez un résultat ci-dessus.</p>
     </div>
-  </div>
 
-  <div class="field">
-    <%= form.label :benchmark_name, "Indice de référence" %>
-    <%= form.text_field :benchmark_name, placeholder: "ex : Nasdaq 100" %>
-  </div>
+    <div class="field">
+      <%= form.label :benchmark_name, "Indice de référence" %>
+      <%= form.text_field :benchmark_name, placeholder: "ex : Nasdaq 100" %>
+      <p class="field-hint">Optionnel — l'indice que cette ligne est censée suivre.</p>
+    </div>
 
-  <div class="field">
-    <%= form.label :asset_class, "Classe d'actif" %>
-    <%= form.text_field :asset_class, list: "asset-class-suggestions", placeholder: "ex : actions" %>
-    <datalist id="asset-class-suggestions">
-      <option value="actions"></option>
-      <option value="obligations"></option>
-      <option value="monétaire"></option>
-      <option value="immobilier"></option>
-      <option value="matières premières"></option>
-    </datalist>
+    <div class="field">
+      <%= form.label :asset_class, "Classe d'actif" %>
+      <%= form.text_field :asset_class, list: "asset-class-suggestions", placeholder: "ex : actions",
+            data: { asset_search_target: "assetClass" } %>
+      <datalist id="asset-class-suggestions">
+        <option value="actions"></option>
+        <option value="obligations"></option>
+        <option value="monétaire"></option>
+        <option value="immobilier"></option>
+        <option value="matières premières"></option>
+      </datalist>
+      <p class="field-hint">Optionnel — pré-rempli automatiquement si vous choisissez un résultat de recherche ci-dessus, à vérifier.</p>
+    </div>
   </div>
 
   <div class="field">
@@ -64,17 +67,21 @@
     <p class="field-hint">Nécessite la source automatique. Le montant prévu est repris du dernier mois ; vous confirmez ensuite le versement.</p>
   </div>
 
-  <div class="field">
-    <%= form.label :initial_capital, "Capital initial (€)" %>
-    <%= form.number_field :initial_capital, step: 0.01, min: 0 %>
-    <p class="field-hint">Capital déjà investi avant le premier mois suivi ici. Laisser à 0 si vous démarrez de zéro.</p>
-  </div>
+  <details class="field-group" <%= "open" if position.initial_capital.to_f.nonzero? || position.initial_contribution.to_f.nonzero? %>>
+    <summary>J'avais déjà du capital investi sur cette ligne</summary>
 
-  <div class="field">
-    <%= form.label :initial_contribution, "Apport initial (€)" %>
-    <%= form.number_field :initial_contribution, step: 0.01, min: 0 %>
-    <p class="field-hint">Total déjà versé avant le premier mois suivi ici. Laisser à 0 si vous démarrez de zéro.</p>
-  </div>
+    <div class="field">
+      <%= form.label :initial_capital, "Capital initial (€)" %>
+      <%= form.number_field :initial_capital, step: 0.01, min: 0 %>
+      <p class="field-hint">Ce que ça vaut aujourd'hui, avant le premier mois suivi ici.</p>
+    </div>
+
+    <div class="field">
+      <%= form.label :initial_contribution, "Apport initial (€)" %>
+      <%= form.number_field :initial_contribution, step: 0.01, min: 0 %>
+      <p class="field-hint">Ce que vous avez versé au total, avant le premier mois suivi ici.</p>
+    </div>
+  </details>
 
   <div class="form-actions">
     <%= form.submit "Enregistrer", class: "btn" %>

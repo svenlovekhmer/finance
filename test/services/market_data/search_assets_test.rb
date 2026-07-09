@@ -26,12 +26,26 @@ module MarketData
       assert_equal [ "ESE.PA", "AAPL" ], results.pluck(:ticker)
     end
 
-    test "formats each result with name, ticker and exchange" do
+    test "formats each result with name, ticker, exchange and a suggested asset class" do
       quotes = [ { "symbol" => "ESE.PA", "longname" => "BNP Paribas Easy S&P 500", "exchDisp" => "Paris", "quoteType" => "ETF" } ]
 
       result = SearchAssets.new(client: FakeClient.new(quotes)).call("sp500").first
 
-      assert_equal({ ticker: "ESE.PA", name: "BNP Paribas Easy S&P 500", exchange: "Paris" }, result)
+      assert_equal({ ticker: "ESE.PA", name: "BNP Paribas Easy S&P 500", exchange: "Paris", suggested_asset_class: "actions" }, result)
+    end
+
+    test "suggests actions for equity and ETF quote types, nothing for mutual funds" do
+      quotes = [
+        { "symbol" => "AAPL", "longname" => "Apple Inc.", "quoteType" => "EQUITY" },
+        { "symbol" => "ESE.PA", "longname" => "BNP Paribas Easy S&P 500", "quoteType" => "ETF" },
+        { "symbol" => "XYZ", "longname" => "Some Mutual Fund", "quoteType" => "MUTUALFUND" }
+      ]
+
+      results = SearchAssets.new(client: FakeClient.new(quotes)).call("x")
+
+      assert_equal "actions", results[0][:suggested_asset_class]
+      assert_equal "actions", results[1][:suggested_asset_class]
+      assert_nil results[2][:suggested_asset_class]
     end
 
     test "falls back to shortname when longname is missing" do

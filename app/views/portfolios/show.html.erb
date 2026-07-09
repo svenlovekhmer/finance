@@ -35,8 +35,8 @@
       <% @positions.each do |position| %>
         <tr>
           <td><%= link_to position.asset_name, portfolio_position_path(@portfolio, position) %></td>
-          <td><%= position.benchmark_name %></td>
-          <td><%= position.asset_class %></td>
+          <td><%= position.benchmark_name.presence || "—" %></td>
+          <td><%= position.asset_class.presence || "—" %></td>
           <td class="numeric"><%= position.ter_pct.present? ? number_to_percentage(position.ter_pct, precision: 2) : "—" %></td>
           <td>
             <%= link_to "Modifier", edit_portfolio_position_path(@portfolio, position) %>

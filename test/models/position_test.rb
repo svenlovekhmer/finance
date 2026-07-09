@@ -22,16 +22,16 @@ class PositionTest < ActiveSupport::TestCase
     assert_not position.valid?
   end
 
-  test "invalid without a benchmark_name" do
+  test "valid without a benchmark_name" do
     position = Position.new(valid_attributes.merge(benchmark_name: nil))
 
-    assert_not position.valid?
+    assert position.valid?
   end
 
-  test "invalid without an asset_class" do
+  test "valid without an asset_class" do
     position = Position.new(valid_attributes.merge(asset_class: nil))
 
-    assert_not position.valid?
+    assert position.valid?
   end
 
   test "invalid with a negative ter_pct" do

@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Search-as-you-type for the Position form: queries /market_data/search and
 // fills the name/ticker fields when a result is picked.
 export default class extends Controller {
-  static targets = ["input", "ticker", "results"]
+  static targets = ["input", "ticker", "assetClass", "results"]
   static values = { url: String }
 
   connect() {
@@ -71,6 +71,9 @@ export default class extends Controller {
 
     this.inputTarget.value = result.name
     if (this.hasTickerTarget) this.tickerTarget.value = result.ticker
+    if (this.hasAssetClassTarget && result.suggested_asset_class) {
+      this.assetClassTarget.value = result.suggested_asset_class
+    }
     this.clear()
   }
 

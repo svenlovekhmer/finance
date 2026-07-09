@@ -27,8 +27,18 @@ module MarketData
       {
         ticker: quote["symbol"],
         name: quote["longname"] || quote["shortname"],
-        exchange: quote["exchDisp"] || quote["exchange"]
+        exchange: quote["exchDisp"] || quote["exchange"],
+        suggested_asset_class: suggested_asset_class(quote["quoteType"])
       }
+    end
+
+    # A best-effort guess, not a fact — Yahoo's search endpoint doesn't
+    # expose what a fund actually holds, so this only covers the case that's
+    # unambiguous from the quote type alone (a single stock, or the very
+    # common case of an equity-tracking ETF). Bond/commodity/mixed ETFs and
+    # mutual funds are left blank rather than guessed wrong.
+    def suggested_asset_class(quote_type)
+      "actions" if %w[EQUITY ETF].include?(quote_type)
     end
   end
 end

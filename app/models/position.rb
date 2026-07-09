@@ -5,8 +5,6 @@ class Position < ApplicationRecord
   has_many :monthly_entries, -> { order(:month) }, dependent: :destroy
 
   validates :asset_name, presence: true
-  validates :benchmark_name, presence: true
-  validates :asset_class, presence: true
   validates :ter_pct, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :initial_capital, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :initial_contribution, presence: true, numericality: { greater_than_or_equal_to: 0 }

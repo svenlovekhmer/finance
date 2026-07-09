@@ -6,10 +6,12 @@
   <div>
     <h1><%= @position.asset_name %></h1>
     <p class="text-muted">
-      <%= @position.ticker.presence || "—" %> · indice <%= @position.benchmark_name %> · <%= @position.asset_class %>
-      <% if @position.ter_pct.present? %>
-        · TER <%= number_to_percentage(@position.ter_pct, precision: 2) %>
-      <% end %>
+      <%= [
+        @position.ticker.presence,
+        @position.benchmark_name.present? ? "indice #{@position.benchmark_name}" : nil,
+        @position.asset_class.presence,
+        @position.ter_pct.present? ? "TER #{number_to_percentage(@position.ter_pct, precision: 2)}" : nil
+      ].compact.join(" · ").presence || "—" %>
     </p>
   </div>
   <%= link_to "Modifier", edit_portfolio_position_path(@portfolio, @position), class: "btn btn--secondary" %>

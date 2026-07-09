@@ -8,6 +8,26 @@
   margin-bottom: $spacing-md;
 }
 
+.field-group {
+  margin-bottom: $spacing-lg;
+
+  summary {
+    cursor: pointer;
+    color: $color-accent;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: $spacing-md;
+
+    &:hover {
+      color: $color-accent-hover;
+    }
+  }
+
+  .field:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .field--checkbox label {
   display: flex;
   align-items: center;
