@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :portfolios do
-    resources :positions, except: [ :index ]
+    resources :positions, except: [ :index ] do
+      resources :monthly_entries, except: [ :index, :show ]
+    end
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

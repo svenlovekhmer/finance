@@ -1,0 +1,49 @@
+<%= form_with model: [ portfolio, position, monthly_entry ], class: "form" do |form| %>
+  <% if monthly_entry.errors.any? %>
+    <div class="error-summary">
+      <strong><%= pluralize(monthly_entry.errors.count, "erreur") %> à corriger :</strong>
+      <ul>
+        <% monthly_entry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :month, "Mois" %>
+    <%= form.month_field :month %>
+  </div>
+
+  <div class="field">
+    <%= form.label :benchmark_variation_pct, "Variation de l'indice (%)" %>
+    <%= form.number_field :benchmark_variation_pct, step: 0.01, placeholder: "ex : 2.50 ou -1.20", autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :actual_variation_pct, "Variation réelle (%)" %>
+    <%= form.number_field :actual_variation_pct, step: 0.01, placeholder: "laisser vide pour suivre l'indice" %>
+    <p class="field-hint">Optionnel — à remplir seulement si la perf réelle diffère de l'indice (frais, tracking error).</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :planned_contribution_amount, "Montant prévu (€)" %>
+    <%= form.number_field :planned_contribution_amount, step: 0.01, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contribution_amount, "Montant versé (€)" %>
+    <%= form.number_field :contribution_amount, step: 0.01, min: 0 %>
+    <p class="field-hint">Laisser vide si le versement n'a pas encore été effectué.</p>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes, "Notes" %>
+    <%= form.text_area :notes, rows: 2 %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Enregistrer", class: "btn" %>
+    <%= link_to "Annuler", portfolio_position_path(portfolio, position), class: "btn btn--secondary" %>
+  </div>
+<% end %>

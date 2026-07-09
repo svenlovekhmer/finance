@@ -1,0 +1,7 @@
+<% content_for :title, "Nouvelle entrée — #{@position.asset_name}" %>
+
+<p><%= link_to "← #{@position.asset_name}", portfolio_position_path(@portfolio, @position) %></p>
+
+<h1>Nouvelle entrée mensuelle</h1>
+
+<%= render "form", portfolio: @portfolio, position: @position, monthly_entry: @monthly_entry %>

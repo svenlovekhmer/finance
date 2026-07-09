@@ -3,6 +3,7 @@ class PositionsController < ApplicationController
   before_action :set_position, only: %i[show edit update destroy]
 
   def show
+    @monthly_entries = @position.monthly_entries.order(:month)
   end
 
   def new

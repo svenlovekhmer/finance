@@ -9,6 +9,7 @@ class MonthlyEntry < ApplicationRecord
   validates :planned_contribution_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   after_save :recalculate_cascade, if: :recalculation_needed?
+  after_destroy :recalculate_cascade
 
   # The applied variation follows an override rule: a manually entered actual
   # variation (e.g. to reflect tracking error or fees) always wins over the

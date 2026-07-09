@@ -15,4 +15,71 @@
   <%= link_to "Modifier", edit_portfolio_position_path(@portfolio, @position), class: "btn btn--secondary" %>
 </div>
 
-<p class="text-muted">Le suivi mensuel de cette position arrive dans une prochaine étape.</p>
+<% if @monthly_entries.any? %>
+  <%= line_chart [
+        { name: "Capital cumulé", data: @monthly_entries.pluck(:month, :cumulative_capital) },
+        { name: "Apport cumulé", data: @monthly_entries.pluck(:month, :cumulative_contribution) }
+      ], colors: [ "#2f6f4f", "#a6a69f" ], height: "320px" %>
+<% end %>
+
+<div class="page-header">
+  <h2>Suivi mensuel</h2>
+  <%= link_to "Nouvelle entrée mensuelle", new_portfolio_position_monthly_entry_path(@portfolio, @position), class: "btn" %>
+</div>
+
+<% if @monthly_entries.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Mois</th>
+        <th class="numeric">Variation</th>
+        <th class="numeric">Versement</th>
+        <th class="numeric">Apport cumulé</th>
+        <th class="numeric">Capital cumulé</th>
+        <th class="numeric">Delta</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @monthly_entries.each do |entry| %>
+        <tr class="<%= "row--planned" if entry.contribution_amount.nil? %>">
+          <td><%= l(entry.month, format: "%B %Y") %></td>
+          <td class="numeric">
+            <%= number_to_percentage(entry.applied_variation_pct, precision: 2) %>
+            <% if entry.actual_variation_pct.present? %>
+              <span class="text-muted" title="Variation réelle saisie manuellement (indice : <%= number_to_percentage(entry.benchmark_variation_pct, precision: 2) %>)">*</span>
+            <% end %>
+          </td>
+          <td class="numeric">
+            <% if entry.contribution_amount.present? %>
+              <%= number_to_currency(entry.contribution_amount) %>
+            <% else %>
+              <%= number_to_currency(entry.planned_contribution_amount) %> (prévu)
+            <% end %>
+          </td>
+          <td class="numeric"><%= number_to_currency(entry.cumulative_contribution) %></td>
+          <td class="numeric"><%= number_to_currency(entry.cumulative_capital) %></td>
+          <td class="numeric">
+            <span class="delta <%= entry.delta.to_f >= 0 ? "delta--positive" : "delta--negative" %>">
+              <%= number_to_currency(entry.delta) %>
+            </span>
+          </td>
+          <td><%= entry.notes %></td>
+          <td>
+            <%= link_to "Modifier", edit_portfolio_position_monthly_entry_path(@portfolio, @position, entry) %>
+            <%= link_to "Supprimer", portfolio_position_monthly_entry_path(@portfolio, @position, entry), data: {
+              turbo_method: :delete,
+              turbo_confirm: "Supprimer l'entrée de #{l(entry.month, format: '%B %Y')} ?"
+            } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <p>Aucune entrée mensuelle pour l'instant.</p>
+    <%= link_to "Ajouter le premier mois", new_portfolio_position_monthly_entry_path(@portfolio, @position), class: "btn" %>
+  </div>
+<% end %>
